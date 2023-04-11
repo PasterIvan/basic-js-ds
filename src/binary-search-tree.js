@@ -60,46 +60,49 @@ class BinarySearchTree {
   }
 
   has(data) {
-    let current = false
-
-    const fun = () => {
-      if (data === current.data) {
-        return true
-      }
-      if (data > current.data) {
-        current = current.right
-        fun()
-      }
-      if (data < current.data) {
-        current = current.left
-        fun()
-      }
-      return false
-    }
-    if (current.data){
-      return fun();
-    }
-    return current
-  }
-
-  find(data) {
-
     let current = new Node()
-    const fun = () => {
-      if (data === current.data) {
+
+    while (current.data) {
+      if (current.data === data) {
         return current
       }
       if (data > current.data) {
-        current = current.right
-        fun()
+        if (current.right) {
+          current = current.right
+        }
+        return false
       }
       if (data < current.data) {
-        current = current.left
-        fun()
+        if (current.left) {
+          current = current.left
+        }
+        return false
       }
-      return current
     }
-    fun()
+    return data === current.data
+  }
+
+  find(data) {
+    let current = new Node()
+
+    while (current.data) {
+      if (current.data === data) {
+        return current
+      }
+      if (data > current.data) {
+        if (current.right) {
+          current = current.right
+        }
+        return false
+      }
+      if (data < current.data) {
+        if (current.left) {
+          current = current.left
+        }
+        return false
+      }
+    }
+    return data === current.data ? current : null
   }
 
   remove(/* data */) {
@@ -117,6 +120,16 @@ class BinarySearchTree {
     // remove line with error and write your code here
   }
 }
+// const tree = new BinarySearchTree();
+// tree.add(9);
+// tree.add(14);
+// tree.add(54);
+// tree.add(2);
+// tree.add(6);
+// tree.add(8);
+// tree.add(31);
+// tree.add(1);
+// console.log(tree.has(54))
 
 module.exports = {
   BinarySearchTree
