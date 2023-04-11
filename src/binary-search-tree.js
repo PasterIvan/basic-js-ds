@@ -60,7 +60,7 @@ class BinarySearchTree {
   }
 
   has(data) {
-    let current = new Node()
+    let current = Node
 
     while (current.data) {
       if (current.data === data) {
@@ -83,7 +83,7 @@ class BinarySearchTree {
   }
 
   find(data) {
-    let current = new Node()
+    let current = Node
 
     while (current.data) {
       if (current.data === data) {
@@ -93,13 +93,13 @@ class BinarySearchTree {
         if (current.right) {
           current = current.right
         }
-        return false
+        return null
       }
       if (data < current.data) {
         if (current.left) {
           current = current.left
         }
-        return false
+        return null
       }
     }
     return data === current.data ? current : null
@@ -111,25 +111,25 @@ class BinarySearchTree {
   }
 
   min() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let current = Node
+
+    while (current.left) {
+      current = current.left
+    }
+    console.log('current', current)
+    return current
   }
 
   max() {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+    let current = Node
+
+    while (current.right) {
+      current = current.right
+    }
+    console.log('current', current)
+    return current
   }
 }
-// const tree = new BinarySearchTree();
-// tree.add(9);
-// tree.add(14);
-// tree.add(54);
-// tree.add(2);
-// tree.add(6);
-// tree.add(8);
-// tree.add(31);
-// tree.add(1);
-// console.log(tree.has(54))
 
 module.exports = {
   BinarySearchTree
