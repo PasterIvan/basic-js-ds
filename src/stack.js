@@ -21,9 +21,6 @@ class Node {
 
 
 class Stack {
-  // constructor() {
-  //   this.head = null
-  // }
   push(element) {
     this.head = fun(this.head, element)
 
@@ -39,7 +36,6 @@ class Stack {
   }
 
   pop() {
-
     let current = this.head
     this.head = current.next
     return current.value
@@ -47,19 +43,11 @@ class Stack {
 
   peek() {
     if (this.head){
-
       return this.head.value
     }
     return null
   }
 }
-// const stack = new Stack();
-// stack.push(5);
-// stack.push(6);
-// stack.push(7);
-// stack.push(8);
-// // stack.peek();
-//  console.log(stack.peek())
 
 module.exports = {
   Stack
