@@ -1,4 +1,4 @@
-const { NotImplementedError } = require('../extensions/index.js');
+// const { NotImplementedError } = require('../extensions/index.js');
 
 const { Node } = require('../extensions/list-tree.js');
 
@@ -8,126 +8,120 @@ const { Node } = require('../extensions/list-tree.js');
 */
 
 class BinarySearchTree {
+constructor() {
+  this.tree = null
+}
 
   root() {
-    if (Node.data){
-      return Node;
-    }
-    return null
+    return this.tree
   }
 
   add(data) {
-    if (Node.data === undefined) {
-      Node.data = new Node(data).data;
-      Node.left = new Node(data).left;
-      Node.right = new Node(data).right;
-    } else {
-      let current = Node
-      let prev = Node
+    this.tree = fun(this.tree, data)
 
-      const fun = () => {
-        if (data > current.data && current.right === null) {
-          current.right = new Node(data)
-        }
-        if (data < current.data && current.left === null) {
-          current.left = new Node(data)
-        }
-
-        if (data > current.data) {
-          if (data < current.right){
-            current = prev.right
-            prev.right = new Node(data)
-            prev.right.right = current
-          }
-          prev = current
-          current = current.right
-          fun()
-        }
-
-        if (data < current.data) {
-          if (data > current.left){
-            current = prev.left
-            prev.left = new Node(data)
-            prev.left.left = current
-          }
-          current = current.left
-          prev = current
-          fun()
-        }
+    function fun (node, data) {
+      if (!node) {
+        return new Node(data)
       }
-      fun()
+      if (data === node.data) {
+        return node
+      }
+      if (data > node.data ) {
+        node.right = fun(node.right, data)
+      }
+      if (data < node.data ) {
+        node.left = fun(node.left, data)
+      }
+      return node
     }
   }
 
   has(data) {
-    let current = Node
+    return funSearch(this.tree, data)
 
-    while (current.data) {
-      if (current.data === data) {
-        return current
-      }
-      if (data > current.data) {
-        if (current.right) {
-          current = current.right
-        }
+    function funSearch (node, data) {
+      if (!node) {
         return false
       }
-      if (data < current.data) {
-        if (current.left) {
-          current = current.left
-        }
-        return false
+      if (data === node.data) {
+        return true
       }
+      return (data > node.data )
+          ? funSearch(node.right, data)
+          : funSearch(node.left, data)
     }
-    return data === current.data
   }
 
   find(data) {
-    let current = Node
+    return funSearch(this.tree, data)
 
-    while (current.data) {
-      if (current.data === data) {
-        return current
-      }
-      if (data > current.data) {
-        if (current.right) {
-          current = current.right
-        }
+    function funSearch (node, data) {
+      if (!node) {
         return null
       }
-      if (data < current.data) {
-        if (current.left) {
-          current = current.left
-        }
-        return null
+      if (data === node.data) {
+        return node
       }
+      return (data > node.data )
+          ? funSearch(node.right, data)
+          : funSearch(node.left, data)
     }
-    return data === current.data ? current : null
   }
 
-  remove(/* data */) {
-    throw new NotImplementedError('Not implemented');
-    // remove line with error and write your code here
+  remove(data)  {
+    this.tree = funRemove(this.tree, data)
+    function funRemove (node, data) {
+      if (!node) {
+        return null
+      }
+      if (data < node.data ) {
+        node.left = funRemove(node.left, data)
+        return node
+      } else if (data > node.data ) {
+        node.right = funRemove(node.right, data)
+        return node
+      } else {
+        if (!node.left && !node.right) {
+          return null
+        }
+        if (!node.right) {
+          node = node.left
+          return node
+        }
+        if (!node.left) {
+          node = node.right
+          return node
+        }
+
+        let minRight = node.right
+        while (minRight.left) {
+          minRight = minRight.left
+        }
+        node.data = minRight.data
+
+        node.right = funRemove(node.right, minRight.data)
+
+        return node
+      }
+    }
   }
 
   min() {
-    let current = Node
+    let current = this.tree
 
     while (current.left) {
       current = current.left
     }
-    console.log('current', current)
-    return current
+    return current.data
   }
 
   max() {
-    let current = Node
+    let current = this.tree
 
     while (current.right) {
       current = current.right
     }
-    console.log('current', current)
-    return current
+    return current.data
   }
 }
 
